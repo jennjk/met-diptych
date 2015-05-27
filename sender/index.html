@@ -1,0 +1,85 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/sb-1.3.4.js"></script>
+
+<script type="text/javascript">
+		  
+	// when window loads call the setup method
+	$(window).on("load", setup);
+
+// Spacebrew Object
+	var sb
+	, app_name = "met-diptych";
+	var server_ip = "66.175.215.36";
+
+	/**
+	* setup Function that connect to spacebrew and creates a listener for clicks of the submit button.
+	*/
+	function setup (){
+		var random_id = "0000" + Math.floor(Math.random() * 10000)
+			;
+
+		app_name = app_name + ' ' + random_id.substring(random_id.length-4);
+
+		// setup spacebrew
+		sb = new Spacebrew.Client(server_ip, app_name );  // create spacebrew client object
+
+		sb.name(app_name);
+		sb.description("This app sends a url to a screen to change the image."); // set the app description
+
+        // create the spacebrew subscription channels
+		sb.addPublish("left_screen_url", "string", "");	// create the publication feed
+
+		// configure the publication and subscription feeds
+		sb.onOpen = onOpen;
+
+		// connect to spacbrew
+		sb.connect();  
+
+		// listen to button clicks
+		$("#button").on("mousedown", onMouseDown);
+	}
+
+	/**
+	 * Function that is called when Spacebrew connection is established
+	 */
+	function onOpen() {
+		var message = "Connected as <strong>" + sb.name() + "</strong>. ";
+		if (sb.name() === app_name) {
+			message += "<br>You can customize this app's name in the query string by adding <strong>name=your_app_name</strong>."
+		}
+		$("#name").html( message );
+	}
+
+	/**
+	* onMouseDown Function that is called when the submit button is pressed. It reads the
+	*     text in the input box, and then sends it to spacebrew. It accepts a mouse event
+	*     object, though we don't use it in this example.
+	*/
+	var imageStack = ["http://t1.gstatic.com/images?q=tbn:ANd9GcQoqND_Ld73fE7HrC4X0TOmuXnAHxa00cJOSFIztawlWAMXl6ig",
+	"http://images.metmuseum.org/CRDImages/md/web-large/md24.167.R.jpg"]
+	function onMouseDown (evt){
+		console.log("pushed");
+		var newString = imageStack.shift();
+		imageStack.push(newString);
+
+		if (newString !== "") {               // if input box is not blank
+			console.log("Sending message " + newString); 
+			sb.send("left_screen_url", "string", newString);   // send string to spacebrew
+		}
+	}
+
+
+
+
+
+</script>
+
+</head>
+<body>
+	<button id="button">Push Me</button>
+
+
+</body>
+</html>
