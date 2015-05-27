@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title 
+      | #{title}
+    base(href='/')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // inject:css
+    // endinject
+    // inject:js
+    // endinject
+  |   
+  body(ng-app='myApp')
+    #content
+      div(ui-view="")
+

@@ -1,0 +1,62 @@
+//@Variables
+$base-px: 12px
+$base-px2: $base-px*2
+$menu-width: 200px
+//@
+
+nav
+  &> span
+    font-weight: bold
+    +icon(paper-plane-o)
+    content: " "
+    font-size: $base-px2
+    font-weight: 100
+  +rem(line-height, $base-px2) 
+  width: 100%
+  position: relative
+  display: inline-block
+  +rem(padding, $base-px)
+  ul, li
+    display: inline
+  ul
+    position: absolute
+    padding-left: 0
+    left: $menu-width
+  li
+    +rem(padding-left, $base-px2)
+
+
+.menu
+  background-color: $menu-bg
+  color: $menu-color
+  +rem(padding-top, $base-px2)
+  h3, h4
+    +rem(padding-left, $base-px)
+
+  +rem(width, $menu-width)
+  height: 100%
+  position: absolute
+
+.main
+  background-color: $main-bg
+  h3
+    +rem(padding-bottom, $base-px2)
+
+  position: absolute
+  width: calc(100% - #{$menu-width})
+  left: $menu-width
+  height: 100%
+  +rem(padding-left, $base-px2)
+  +rem(padding-top, $base-px2)
+
+.footer
+  position: absolute
+  bottom: 0
+  +rem(height, $base-px2) 
+  +rem(line-height, $base-px2) 
+  display: inline-block
+
+  
+
+
+

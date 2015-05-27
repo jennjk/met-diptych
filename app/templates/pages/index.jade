@@ -1,0 +1,27 @@
+div(ng-controller="SearchCtrl")
+  form(ng-submit="submit()")
+    
+    input.form-control(placeholder="Search Term" 
+                      type="text" 
+                      name="term"
+                      autofocus
+                      required
+                      ng-model-options="{ updateOn: 'form.$submitted default blur'}" 
+                      ng-model="term")
+    input(type="submit" value="Search")
+
+  button(ng-click="next()") Next
+  p
+   | {{status}}
+
+  h1 ---------
+  div.contain
+    div.pilot
+      img.fadimate(ng-src="{{pilot}}" 
+          fade-in
+          )
+
+    div.copilot
+      img.fadimate(ng-src="{{coPilot}}"
+          fade-in
+          )
