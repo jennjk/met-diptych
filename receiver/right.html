@@ -1,0 +1,76 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/sb-1.3.4.js"></script>
+
+<script type="text/javascript">
+		  
+	// when window loads call the setup method
+	$(window).on("load", setup);
+
+// Spacebrew Object
+	var sb
+	, app_name = "met-diptych";
+	var server_ip = "66.175.215.36";
+
+	/**
+	* setup Function that connect to spacebrew and creates a listener for clicks of the submit button.
+	*/
+	function setup (){
+		var random_id = "0000" + Math.floor(Math.random() * 10000)
+			;
+
+		app_name = app_name + ' ' + random_id.substring(random_id.length-4);
+
+		// setup spacebrew
+		sb = new Spacebrew.Client(server_ip, app_name );  // create spacebrew client object
+
+		sb.name(app_name);
+		sb.description("This app sends a url to a screen to change the image."); // set the app description
+
+		sb.addSubscribe("right_screen_url", "string");		// create the subscription feed
+
+		// configure the publication and subscription feeds
+		sb.onStringMessage = onStringMessage;		
+		sb.onOpen = onOpen;
+
+		// connect to spacbrew
+		sb.connect();  
+	}
+
+
+	/**
+	 * Function that is called when Spacebrew connection is established
+	 */
+	function onOpen() {
+		var message = "Connected as <strong>" + sb.name() + "</strong>. ";
+		if (sb.name() === app_name) {
+			message += "<br>You can customize this app's name in the query string by adding <strong>name=your_app_name</strong>."
+		}
+		$("#name").html( message );
+	}
+
+	/**
+	 * onStringMessage Function that is called whenever new spacebrew string messages are received.
+	 *          It accepts two parameters:
+	 * @param  {String} name    Holds name of the subscription feed channel
+	 * @param  {String} value 	Holds value received from the subscription feed
+	 */
+	function onStringMessage( name, value ){
+		console.log(name+ " string message received ", value);
+		$("#msg_received").text(value); // display the sent message in the browser      
+		$("#image").text(value);   
+		$("#theimage").attr("src", value);
+
+		// change teh Img source HERE
+
+	}
+
+    </script>
+	</head>
+<body>
+	waiting
+	<span id="image"></span>
+	<img id="theimage" src="" />
+</body>
+</html>
