@@ -1,14 +1,24 @@
+<!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="js/sb-1.3.4.js"></script>
+<meta charset="UTF-8">
 
-<script type="text/javascript">
-		  
+
+	<title>DIPTYCH</title>
+
+		<link href="css/diptych.css" rel="stylesheet" type = "text/css">
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/sb-1.3.4.js"></script>
+	
+
+	<script type="text/javascript">
+
 	// when window loads call the setup method
 	$(window).on("load", setup);
 
-// Spacebrew Object
+	// Spacebrew Object
 	var sb
 	, app_name = "met-diptych";
 	var server_ip = "66.175.215.36";
@@ -224,16 +234,26 @@
 </script>
 
 </head>
+
 <body>
-	<form>
-		<input type="text" size=40 id="searchterm" />
-	<form>
-	<button id="search">Search</button>
+	<div>
+		<h1>EXPLORE DIPTYCH</h1>
+		</br>
+	</div>
 
-		<BR>
-	<button id="leftbutton">Left</button>
-	<button id="rightbutton">Right</button>
+	<div class="form-search">
+	<center><form>
+	<input type="text" size=40 id="searchterm" /></br></br>
+	<form>
+	<button class="button" id="search">search</button>
+	<center>
+		</br>
 
+		<button class="button" id="leftbutton">L</button>
+		<button class="button" id="rightbutton">R</button>
+	</center>
+	</form>
+	</div>
 
 </body>
 </html>

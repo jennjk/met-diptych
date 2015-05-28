@@ -1,0 +1,89 @@
+/** diptych
+
+**/
+
+{
+	margin : 0px;
+	padding : 0px;
+}
+
+
+body {
+	font-family: 'Droid Sans Mono', ;
+    width: 500px;
+    padding: 30px;
+    background: #FFFFFF;
+    margin: 50px auto;
+
+}
+
+
+h1 {
+	font-family: 'Droid Sans Mono';    
+	width: 500px;
+	font-size: 1.2em;
+    text-align: center;
+	text-shadow: none;
+  	text-decoration: none;
+  	text-transform: none;
+	font-weight: 400;
+}
+
+p {
+	font-family: 'Droid Sans Mono';    
+	width: 500px;
+}
+
+
+.form-search input[type="text"],
+.form-search textarea,
+.form-search select
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+	font-family: 'Droid Sans Mono';
+    font-weight: normal;
+    height: 45px;
+}
+
+.button{
+    font-family: 'Droid Sans Mono'; 
+    font-weight: normal;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    display: inline-block;
+    padding: 20px 30px;
+}
+
+.button:hover {
+   border-color: #D2B48C;
+   background: #FFFFFF;
+   color: #000;
+   }
+.button:active {
+   border-top-color: #fff;
+   background: #D2B48C;
+   color: #fff;
+
+   }
+
+
+}
+
+}
+
+</style>
