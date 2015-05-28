@@ -30,6 +30,7 @@
 
         // create the spacebrew subscription channels
 		sb.addPublish("left_screen_url", "string", "");	// create the publication feed
+		sb.addPublish("right_screen_url", "string", "");	// create the publication feed
 
 		// configure the publication and subscription feeds
 		sb.onOpen = onOpen;
@@ -38,7 +39,9 @@
 		sb.connect();  
 
 		// listen to button clicks
-		$("#button").on("mousedown", onMouseDown);
+		$("#search").click(newSearch);
+		$("#leftbutton").click(leftButtonPress);
+		$("#rightbutton").click(rightButtonPress);
 	}
 
 	/**
@@ -59,15 +62,152 @@
 	*/
 	var imageStack = ["http://t1.gstatic.com/images?q=tbn:ANd9GcQoqND_Ld73fE7HrC4X0TOmuXnAHxa00cJOSFIztawlWAMXl6ig",
 	"http://images.metmuseum.org/CRDImages/md/web-large/md24.167.R.jpg"]
-	function onMouseDown (evt){
+
+	var leftObj = false;
+	function leftButtonPress (evt){
+		if(evt){
+			evt.preventDefault();
+		}
+
 		console.log("pushed");
-		var newString = imageStack.shift();
-		imageStack.push(newString);
+
+		var newItem = imageStack.shift();
+		imageStack.push(newItem);		
+		var first = newItem;
+		var giveup = false;
+		var first = true;
+
+		while(!giveup ){
+
+			var tooSimilar = false;
+			var noImage = false;
+			if(objectsTooSimilar(newItem, rightObj)){
+				tooSimilar = true;
+			};
+			if(!newItem.image_thumb || newItem.image_thumb.match(/NoImageAvailable/)){
+				noImage = true;
+			}
+
+			if(tooSimilar || noImage){
+				var newItem = imageStack.shift();
+				imageStack.push(newItem);				
+			}else{
+				break;
+			}
+
+			if(first == newItem){
+				giveup = true;
+			}
+			first = false;
+		}
+
+
+		leftObj = newItem;
+		var newString= newItem.image_thumb;
+		newString = newString.replace(/web-thumb/, "web-large");		
 
 		if (newString !== "") {               // if input box is not blank
 			console.log("Sending message " + newString); 
 			sb.send("left_screen_url", "string", newString);   // send string to spacebrew
 		}
+		return false;
+	}
+
+	var rightObj = false;
+	function rightButtonPress (evt){
+		if(evt){
+			evt.preventDefault();
+		}
+		console.log("pushed");
+
+		var newItem = imageStack.shift();
+		imageStack.push(newItem);		
+		var first = newItem;
+		var giveup = false;
+		var first = true;
+
+		while(!giveup ){
+
+			var tooSimilar = false;
+			var noImage = false;
+			if(objectsTooSimilar(newItem, leftObj)){
+				tooSimilar = true;
+			};
+			if(!newItem.image_thumb || newItem.image_thumb.match(/NoImageAvailable/)){
+				noImage = true;
+			}
+
+			if(tooSimilar || noImage){
+				var newItem = imageStack.shift();
+				imageStack.push(newItem);				
+			}else{
+				break;
+			}
+
+			if(first == newItem){
+				giveup = true;
+			}
+			first = false;
+		}
+		rightObj = newItem;
+
+		var newString= newItem.image_thumb;
+		newString = newString.replace(/web-thumb/, "web-large");		
+
+		if (newString !== "") {               // if input box is not blank
+			console.log("Sending message " + newString); 
+			sb.send("right_screen_url", "string", newString);   // send string to spacebrew
+		}
+		return false;
+	}
+
+
+	function objectsTooSimilar(obj1, obj2){
+		console.log("comparing");
+		console.log(obj1);
+		console.log(obj2);
+		if(obj1 == obj2){
+
+			return true;
+		}
+
+		if(obj1.medium == obj2.medium){
+			console.log("similar");
+			return true;
+		}
+
+		return false;
+	}
+
+	function newSearch(evt){
+		evt.preventDefault();
+		var term = $("#searchterm").val();
+		console.log("term is " + term);
+
+		var url = "http://scrapi.org/search/"+encodeURI(term);
+
+		$.ajax({
+			url : url,
+			success : function(data, status){
+				console.log("success");
+				console.log(data);
+				if(data.collection && data.collection.items && data.collection.items.length > 0){
+					imageStack = data.collection.items;
+					leftButtonPress(false);
+					rightButtonPress(false);
+				}else{
+					console.log("no results");
+				}
+			},
+
+			error : function (xhr, status, msg){
+				console.log("error");
+				console.log(msg);
+				console.log(status);
+			}
+		});
+
+		return false;
 	}
 
 
@@ -78,7 +218,14 @@
 
 </head>
 <body>
-	<button id="button">Push Me</button>
+	<form>
+		<input type="text" size=40 id="searchterm" />
+	<form>
+	<button id="search">Search</button>
+
+		<BR>
+	<button id="leftbutton">Left</button>
+	<button id="rightbutton">Right</button>
 
 
 </body>
