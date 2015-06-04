@@ -1,5 +1,4 @@
 # met-diptych
-diptych.space public
 
 ‘Diptych' seeks to explore the unspoken dialogue between art objects while demonstrating implicit connections across the Met’s collection. Users are able to discover connections across the collection by composing object pairs and traveling further along thematic paths. 
 
@@ -35,3 +34,7 @@ To experience in browser :
 
 
 6) Use http://diptych.space as search interface to compose diptychs
+
+---
+
+Thanks to Don Undeen of the Met MediaLab for Spacebrew configuration, Rob Polana for rethinking web prototype, Gabriel Gianordoli for CSS fixes, Electric Objects for generously lending screens for installation, and the good folks of the Metropolitan Museum of Art.
